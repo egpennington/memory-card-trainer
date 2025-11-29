@@ -118,7 +118,7 @@ const App: React.FC = () => {
   if (!currentCard) return <div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">Loading Deck...</div>;
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col md:flex-row overflow-hidden relative">
+    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col md:flex-row overflow-x-hidden relative">
       
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800 z-20">
