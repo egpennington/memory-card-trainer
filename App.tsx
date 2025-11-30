@@ -128,9 +128,10 @@ const App: React.FC = () => {
         <div className="flex items-center gap-2">
           <Layers className="text-indigo-500 w-6 h-6" />
           <h1 className="font-bold text-lg tracking-tight">
-            Mnemonica<span className="text-indigo-400">Trainer</span>
+            Memory <span className="text-indigo-400">Trainer</span>
           </h1>
         </div>
+        
         <div className="text-xs font-mono text-slate-500 bg-slate-800 px-2 py-1 rounded">
           {deckType === 'mnemonica' ? 'Mnemonic' : 'Random'}
         </div>
@@ -180,11 +181,7 @@ const App: React.FC = () => {
               </ul>
             </div>
           </div>
-        </div>
-
-        <div className="text-center text-xs text-slate-600 pb-4 md:pb-0">
-          Train your memory. Master the stack.
-        </div>
+        </div>        
       </aside>
 
       {/* Main Content Area */}
