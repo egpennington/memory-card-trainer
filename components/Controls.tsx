@@ -1,86 +1,104 @@
 import React from 'react';
-import { Play, Pause, SkipBack, SkipForward, RefreshCw } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward } from 'lucide-react';
 
 interface ControlsProps {
   isPlaying: boolean;
   onTogglePlay: () => void;
   onNext: () => void;
   onPrev: () => void;
-  onReset: () => void;
+  onReset: () => void; // still passed in, but we no longer render a second reset here
   practiceMode: 'manual' | 'timer';
   isStart: boolean;
   isEnd: boolean;
 }
 
-const Controls: React.FC<ControlsProps> = ({ 
-  isPlaying, 
-  onTogglePlay, 
-  onNext, 
-  onPrev, 
-  onReset, 
+const Controls: React.FC<ControlsProps> = ({
+  isPlaying,
+  onTogglePlay,
+  onNext,
+  onPrev,
+  // onReset,  // not used visually anymore (reset is next to Hide Card)
   practiceMode,
   isStart,
-  isEnd
+  isEnd,
 }) => {
+  const isTimer = practiceMode === 'timer';
+
   return (
-    <div className="flex items-center justify-center gap-4 sm:gap-6 w-full max-w-md mx-auto p-4 bg-slate-800/80 backdrop-blur-md rounded-2xl shadow-xl border border-slate-700/50">
-      
-      {/* Previous */}
-      <button 
-        onClick={onPrev}
-        disabled={isPlaying || isStart}
-        className="p-3 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-        aria-label="Previous Card"
+    <>
+      {/* Side arrows – now for ALL breakpoints, centered around the card */}
+      <div
+        className="
+          absolute inset-y-0 left-1/2 -translate-x-1/2
+          flex items-center justify-between
+          pointer-events-none
+          w-[22rem] sm:w-[26rem] lg:w-[28rem]
+          px-2 sm:px-4
+        "
       >
-        <SkipBack className="w-6 h-6" />
-      </button>
+        {/* Previous */}
+        <button
+          onClick={onPrev}
+          disabled={isPlaying || isStart}
+          className="
+            pointer-events-auto
+            p-3 md:p-4 rounded-full
+            bg-slate-900/70 border border-slate-700/70
+            text-slate-100 shadow-lg
+            active:scale-95
+            disabled:opacity-30 disabled:cursor-not-allowed
+          "
+          aria-label="Previous card"
+        >
+          <SkipBack className="w-5 h-5 md:w-6 md:h-6" />
+        </button>
 
-      {/* Play/Pause (Timer Mode) or Reset (Manual Mode - optional location) */}
-      {practiceMode === 'timer' ? (
-        <button 
+        {/* Next */}
+        <button
+          onClick={onNext}
+          disabled={isPlaying || isEnd}
+          className="
+            pointer-events-auto
+            p-3 md:p-4 rounded-full
+            bg-slate-900/70 border border-slate-700/70
+            text-slate-100 shadow-lg
+            active:scale-95
+            disabled:opacity-30 disabled:cursor-not-allowed
+          "
+          aria-label="Next card"
+        >
+          <SkipForward className="w-5 h-5 md:w-6 md:h-6" />
+        </button>
+      </div>
+
+      {/* Timer play/pause – centered under card, only in Timer mode */}
+      <div
+        className={`
+          absolute -bottom-6 left-1/2 -translate-x-1/2
+          flex items-center justify-center
+          ${isTimer ? 'gap-4' : 'hidden'}
+        `}
+      >
+        <button
           onClick={onTogglePlay}
-          className={`p-4 rounded-full shadow-lg transform transition-all active:scale-95 ${
-            isPlaying 
-              ? 'bg-amber-500 hover:bg-amber-400 text-slate-900' 
-              : 'bg-emerald-500 hover:bg-emerald-400 text-slate-900'
-          }`}
-          aria-label={isPlaying ? "Pause" : "Start Auto-Play"}
+          className={`
+            p-3 md:p-4 rounded-full shadow-lg active:scale-95
+            ${
+              isPlaying
+                ? 'bg-amber-500 hover:bg-amber-400 text-slate-900'
+                : 'bg-emerald-500 hover:bg-emerald-400 text-slate-900'
+            }
+          `}
+          aria-label={isPlaying ? 'Pause auto-play' : 'Start auto-play'}
         >
-          {isPlaying ? <Pause className="w-8 h-8 fill-current" /> : <Play className="w-8 h-8 fill-current ml-1" />}
+          {isPlaying ? (
+            <Pause className="w-6 h-6 md:w-7 md:h-7 fill-current" />
+          ) : (
+            <Play className="w-6 h-6 md:w-7 md:h-7 fill-current ml-0.5" />
+          )}
         </button>
-      ) : (
-         <button 
-          onClick={onReset}
-          className="p-4 bg-slate-700 hover:bg-slate-600 text-white rounded-full shadow-lg transition-all active:scale-95"
-          aria-label="Reset Deck"
-        >
-          <RefreshCw className="w-8 h-8" />
-        </button>
-      )}
-
-      {/* Next */}
-      <button 
-        onClick={onNext}
-        disabled={isPlaying || isEnd}
-        className="p-3 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-        aria-label="Next Card"
-      >
-        <SkipForward className="w-6 h-6" />
-      </button>
-
-      {/* Reset for Timer Mode (small button on side) */}
-      {practiceMode === 'timer' && (
-        <div className="absolute -right-16 top-1/2 -translate-y-1/2 hidden sm:block">
-           <button 
-            onClick={onReset}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-full transition-colors"
-            title="Reset Session"
-          >
-            <RefreshCw className="w-5 h-5" />
-          </button>
-        </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 

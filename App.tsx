@@ -199,7 +199,8 @@ const App: React.FC = () => {
 
         {/* Card Viewer Area */}
         <div className="flex-1 flex items-center justify-center p-4 relative">
-          <div className="relative z-10">
+          {/* Card + controls share the SAME relative wrapper */}
+          <div className="relative z-10 flex items-center justify-center">
             <CardViewer
               card={currentCard}
               isFlipped={isFlipped}
@@ -207,6 +208,19 @@ const App: React.FC = () => {
               onClick={() => {
                 if (practiceMode === 'manual') handleFlipToggle();
               }}
+              onReset={resetSession}
+            />
+
+            {/* Controls overlay (arrows around card, timer controls etc.) */}
+            <Controls
+              isPlaying={isPlaying}
+              onTogglePlay={handleTogglePlay}
+              onNext={() => handleNextCard()}
+              onPrev={handlePrevCard}
+              onReset={resetSession}
+              practiceMode={practiceMode}
+              isStart={currentIndex === 0}
+              isEnd={currentIndex === deck.length - 1}
             />
           </div>
 
@@ -217,19 +231,6 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Controls */}
-        <div className="w-full p-4 md:p-8 z-20">
-          <Controls
-            isPlaying={isPlaying}
-            onTogglePlay={handleTogglePlay}
-            onNext={() => handleNextCard()}
-            onPrev={handlePrevCard}
-            onReset={resetSession}
-            practiceMode={practiceMode}
-            isStart={currentIndex === 0}
-            isEnd={currentIndex === deck.length - 1}
-          />
-        </div>
       </main>
     </div>
 
