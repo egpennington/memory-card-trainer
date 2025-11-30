@@ -188,7 +188,7 @@ const App: React.FC = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 h-[calc(100vh-60px)] md:h-screen relative flex flex-col">
+      <main className="flex-1 relative flex flex-col pb-20 md:h-screen md:pb-6">
         {/* Top Bar Stats */}
         <div className="w-full p-4 md:p-8 flex justify-center">
           <div className="w-full max-w-2xl">
