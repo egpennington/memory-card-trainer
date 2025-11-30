@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DeckType, PracticeMode } from '../types';
-import { Brain, Shuffle, Clock, Hand, Settings2 } from 'lucide-react';
+import { Brain, Shuffle, Clock, Hand, Settings2, SlidersHorizontal } from 'lucide-react';
 
 interface SettingsPanelProps {
   deckType: DeckType;
@@ -21,17 +21,36 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   setSpeedSeconds,
   isPlaying
 }) => {
+  // On mobile: collapse/expand the whole config content
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   return (
     <div className="bg-slate-800 border border-slate-700 rounded-xl p-4 sm:p-6 w-full max-w-sm">
-      <div className="flex items-center gap-2 mb-6 text-slate-200 border-b border-slate-700 pb-3">
-        <Settings2 className="w-5 h-5 text-indigo-400" />
-        <h2 className="text-lg font-semibold">Configuration</h2>
+      {/* Header + mobile hide/show toggle */}
+      <div className="flex items-center justify-between gap-2 mb-6 text-slate-200 border-b border-slate-700 pb-3">
+        <div className="flex items-center gap-2">
+          <Settings2 className="w-5 h-5 text-indigo-400" />
+          <h2 className="text-lg font-semibold">Configuration</h2>
+        </div>
+
+        {/* Mobile-only button to collapse/expand the whole panel */}
+        <button
+          type="button"
+          onClick={() => setIsCollapsed(prev => !prev)}
+          className="md:hidden text-[11px] px-2 py-1 rounded-full border border-slate-600 bg-slate-900/70 text-slate-200 hover:bg-slate-800 transition-colors flex items-center gap-1"
+        >
+          <SlidersHorizontal className="w-3 h-3" />
+          <span>{isCollapsed ? 'Show' : 'Hide'}</span>
+        </button>
       </div>
 
-      <div className="space-y-6">
+      {/* Entire configuration content */}
+      <div className={`space-y-6 ${isCollapsed ? 'hidden md:block' : ''}`}>
         {/* Deck Selection */}
         <div className="space-y-3">
-          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Deck Order</label>
+          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            Deck Order
+          </label>
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => setDeckType('mnemonica')}
@@ -62,7 +81,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
         {/* Mode Selection */}
         <div className="space-y-3">
-          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Practice Mode</label>
+          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            Practice Mode
+          </label>
           <div className="flex bg-slate-900/50 p-1 rounded-lg border border-slate-700/50">
             <button
               onClick={() => setPracticeMode('manual')}
@@ -89,11 +110,19 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           </div>
         </div>
 
-        {/* Speed Control (Only visible in Timer mode) */}
-        <div className={`space-y-3 transition-all duration-300 overflow-hidden ${practiceMode === 'timer' ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'}`}>
+        {/* Speed Control (only when Timer mode is active) */}
+        <div
+          className={`space-y-3 transition-all duration-300 overflow-hidden ${
+            practiceMode === 'timer' ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
           <div className="flex justify-between items-center">
-            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Speed</label>
-            <span className="text-sm font-mono text-emerald-400 bg-emerald-900/30 px-2 py-0.5 rounded">{speedSeconds.toFixed(1)}s / card</span>
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              Speed
+            </label>
+            <span className="text-sm font-mono text-emerald-400 bg-emerald-900/30 px-2 py-0.5 rounded">
+              {speedSeconds.toFixed(1)}s / card
+            </span>
           </div>
           <input
             type="range"
@@ -101,13 +130,13 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             max="10"
             step="0.5"
             value={speedSeconds}
-            onChange={(e) => setSpeedSeconds(parseFloat(e.target.value))}
+            onChange={e => setSpeedSeconds(parseFloat(e.target.value))}
             disabled={isPlaying}
             className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <div className="flex justify-between text-xs text-slate-500 font-mono">
-             <span>Fast</span>
-             <span>Slow</span>
+            <span>Fast</span>
+            <span>Slow</span>
           </div>
         </div>
       </div>

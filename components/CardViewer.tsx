@@ -24,7 +24,7 @@ const CardViewer: React.FC<CardViewerProps> = ({ card, isFlipped, onFlipToggle, 
       
       {/* Card Container */}
       <div 
-        className="relative w-64 h-96 sm:w-72 sm:h-[26rem] cursor-pointer group"
+        className="relative w-56 h-80 sm:w-72 sm:h-[26rem] cursor-pointer group"
         onClick={onClick}
       >
         <div 
@@ -34,7 +34,7 @@ const CardViewer: React.FC<CardViewerProps> = ({ card, isFlipped, onFlipToggle, 
           <div className="absolute inset-0 w-full h-full bg-white rounded-xl shadow-2xl backface-hidden flex flex-col justify-between p-4 select-none border border-slate-200">
             {/* Top Left */}
             <div className="flex flex-col items-center self-start">
-              <span className={`text-3xl font-bold font-serif ${card.color === 'red' ? 'text-red-500' : 'text-slate-900'}`}>
+              <span className={`text-2xl sm:text-3xl font-bold font-serif ${card.color === 'red' ? 'text-red-500' : 'text-slate-900'}`}>
                 {card.rank}
               </span>
               <SuitIcon suit={card.suit} className="text-2xl" />
@@ -42,14 +42,14 @@ const CardViewer: React.FC<CardViewerProps> = ({ card, isFlipped, onFlipToggle, 
 
             {/* Center */}
             <div className="absolute inset-0 flex items-center justify-center">
-               <div className="transform scale-[3]">
-                <SuitIcon suit={card.suit} className="text-6xl" />
+               <div className="transform scale-[2.4] sm:scale-[3]">
+                <SuitIcon suit={card.suit} className="text-5xl sm:text-6xl" />
                </div>
             </div>
 
             {/* Bottom Right */}
             <div className="flex flex-col items-center self-end transform rotate-180">
-              <span className={`text-3xl font-bold font-serif ${card.color === 'red' ? 'text-red-500' : 'text-slate-900'}`}>
+              <span className={`text-2xl sm:text-3xl font-bold font-serif ${card.color === 'red' ? 'text-red-500' : 'text-slate-900'}`}>
                 {card.rank}
               </span>
               <SuitIcon suit={card.suit} className="text-2xl" />
