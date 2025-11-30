@@ -3,7 +3,6 @@ const OFFLINE_URLS = [
   "/",
   "/index.html",
   "/site.webmanifest",
-  "/index.tsx"
   // you can add more static assets here if you want
 ];
 
