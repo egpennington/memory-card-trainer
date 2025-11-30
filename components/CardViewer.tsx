@@ -23,10 +23,11 @@ const CardViewer: React.FC<CardViewerProps> = ({ card, isFlipped, onFlipToggle, 
     <div className="flex flex-col items-center justify-center space-y-6 perspective-1000">
       
       {/* Card Container */}
-      <div 
-        className="relative w-56 h-80 sm:w-72 sm:h-[26rem] cursor-pointer group"
+      <div
+        className="relative w-52 h-72 sm:w-64 sm:h-96 lg:w-72 lg:h-[26rem] cursor-pointer group"
         onClick={onClick}
       >
+
         <div 
           className={`relative w-full h-full duration-500 transform-style-3d transition-all ${isFlipped ? 'rotate-y-180' : ''}`}
         >

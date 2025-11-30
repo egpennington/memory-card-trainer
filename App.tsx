@@ -131,7 +131,7 @@ const App: React.FC = () => {
             Memory <span className="text-indigo-400">Trainer</span>
           </h1>
         </div>
-        
+      
         <div className="text-xs font-mono text-slate-500 bg-slate-800 px-2 py-1 rounded">
           {deckType === 'mnemonica' ? 'Mnemonic' : 'Random'}
         </div>
